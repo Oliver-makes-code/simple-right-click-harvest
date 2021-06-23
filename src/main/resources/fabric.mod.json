@@ -29,8 +29,5 @@
     "fabric": "*",
     "minecraft": ">=1.17",
     "java": ">=16"
-  },
-  "breaks": {
-    "optifabric": "*"
   }
 }

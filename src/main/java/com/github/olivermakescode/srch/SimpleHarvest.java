@@ -6,6 +6,7 @@ import net.minecraft.block.BeetrootsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 
@@ -16,12 +17,13 @@ public class SimpleHarvest implements ModInitializer {
 			BlockState blockState = world.getBlockState(hitResult.getBlockPos());
 			BlockPos pos = hitResult.getBlockPos();
 			if (blockState.getBlock() instanceof BeetrootsBlock) {
-				int age = blockState.get(BeetrootsBlock.AGE);
+				int age = blockState.get(Properties.AGE_3);
 				if (age == 3) {
 					world.breakBlock(pos,true,player);
 					world.setBlockState(pos,blockState.with(BeetrootsBlock.AGE,0));
 					return ActionResult.SUCCESS;
 				}
+				return ActionResult.PASS;
 			}
 			if (blockState.getBlock() instanceof CropBlock) {
 				int age = blockState.get(CropBlock.AGE);

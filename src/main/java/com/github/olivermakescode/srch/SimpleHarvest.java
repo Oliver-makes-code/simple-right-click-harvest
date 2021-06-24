@@ -13,6 +13,7 @@ public class SimpleHarvest implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
+			if (player.isSneaking()) return ActionResult.PASS;
 			BlockState blockState = world.getBlockState(hitResult.getBlockPos());
 			BlockPos pos = hitResult.getBlockPos();
 			if (blockState.getBlock() instanceof BeetrootsBlock) {

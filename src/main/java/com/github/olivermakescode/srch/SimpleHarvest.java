@@ -9,6 +9,8 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.Optional;
+
 public class SimpleHarvest implements ModInitializer {
 	@Override
 	public void onInitialize() {
@@ -17,8 +19,8 @@ public class SimpleHarvest implements ModInitializer {
 			BlockState blockState = world.getBlockState(hitResult.getBlockPos());
 			BlockPos pos = hitResult.getBlockPos();
 			if (blockState.getBlock() instanceof BeetrootsBlock) {
-				int age = blockState.get(Properties.AGE_3);
-				if (age == 3) {
+				Optional<Integer> age = blockState.getOrEmpty(Properties.AGE_3);
+				if (age.isPresent() && age.get() == 3) {
 					world.breakBlock(pos,true,player);
 					world.setBlockState(pos,blockState.with(BeetrootsBlock.AGE,0));
 					return ActionResult.SUCCESS;
@@ -26,8 +28,8 @@ public class SimpleHarvest implements ModInitializer {
 				return ActionResult.PASS;
 			}
 			if (blockState.getBlock() instanceof CropBlock) {
-				int age = blockState.get(CropBlock.AGE);
-				if (age == 7) {
+				Optional<Integer> age = blockState.getOrEmpty(CropBlock.AGE);
+				if (age.isPresent() && age.get() == 7) {
 					world.breakBlock(pos,true,player);
 					world.setBlockState(pos,blockState.with(CropBlock.AGE,0));
 					return ActionResult.SUCCESS;
